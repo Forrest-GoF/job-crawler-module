@@ -22,7 +22,7 @@ def crawling(q="개발자", start=0, date_posted="", employment_type=""):
     soup = BeautifulSoup(html, 'html.parser')
 
     # get contents list
-    title = soup.findAll("h2", {"class":"SBkjJd"})
+    title = soup.findAll("h2", {"class":"KLsYvd"})
     id = soup.findAll("div", {"class":"KGjGe"})
     company_name = soup.findAll("div", {"class":"oNwCmf"})
     thumbnail = soup.findAll("div", {"class":"x1z8cb"})
@@ -31,7 +31,7 @@ def crawling(q="개발자", start=0, date_posted="", employment_type=""):
     url = soup.findAll("a", {"class":"pMhGee"})
     description = soup.findAll("span", {"class":"HBvzbc"})
     type_salary_date_parent = soup.findAll("div", {"class":"KKh3md"})
-
+    
     # parse data
     job_preview_list = []
     for i in range(len(title)):
