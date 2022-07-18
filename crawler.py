@@ -2,9 +2,13 @@ import requests
 from config import set_header
 from bs4 import BeautifulSoup
 
-def crawling(q="개발자", start=0, date_posted="", employment_type=""):
+def crawling(q, start, date_posted, employment_type):
     # set header
     headers = set_header()
+
+    # valid URL
+    if not q: q = "개발자"
+    if not start or not start.isdigit(): start = 0
     
     # build url
     url = build_url(q, start, date_posted, employment_type)
@@ -67,11 +71,12 @@ def crawling(q="개발자", start=0, date_posted="", employment_type=""):
     return job_preview_list
 
 def build_url(q, start, date_posted, employment_type):
+
     # Domain
     url = "https://www.google.com"
 
     # Required
-    url += ("/search?q=" + q)
+    url += ("/search?q=" + str(q))
     url += ("&start=" + str(start))
     url += "&ibp=htl;jobs#htivrt=jobs"
 
