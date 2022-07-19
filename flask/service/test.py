@@ -3,7 +3,7 @@ from crawler import build_url, crawling
 params = {}
 # params["q"] = "백엔드"
 # params["start"] = "1"
-# params["date_posted"] = "month"
+params["date_posted"] = "today"
 # params["employment_type"] = "FULLTIME"
 
 url = build_url(params)

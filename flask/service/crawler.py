@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from config import header
+from service.config import header
 
 def crawling(url):
     # check status
