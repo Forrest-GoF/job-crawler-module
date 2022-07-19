@@ -1,8 +1,13 @@
-from crawler import crawling
+from crawler import build_url, crawling
 
-crawling()
-crawling(q="백엔드")
-crawling(q="백엔드", date_posted="3days")
-crawling(q="백엔드", employment_type="FULLTIME")
-crawling(q="백엔드", date_posted="3days", employment_type="FULLTIME")
-crawling(q="백엔드", start =10, date_posted="3days", employment_type="FULLTIME")
+params = {}
+# params["q"] = "백엔드"
+# params["start"] = "1"
+# params["date_posted"] = "month"
+# params["employment_type"] = "FULLTIME"
+
+url = build_url(params)
+data = crawling(url)
+
+print("Crawling url:", url)
+print("num of jobs:", len(data))

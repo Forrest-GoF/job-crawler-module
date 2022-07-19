@@ -1,5 +1,4 @@
-def set_header():
-    return {
+header = {
         'authority': 'www.google.com',
         'accept': '*/*',
         'accept-language': 'ko,en;q=0.9,en-US;q=0.8,ko-KR;q=0.7',

@@ -1,25 +1,13 @@
 import requests
-from config import set_header
 from bs4 import BeautifulSoup
 
-def crawling(q, start, date_posted, employment_type):
-    # set header
-    headers = set_header()
+from config import header
 
-    # valid URL
-    if not q: q = "개발자"
-    if not start or not start.isdigit(): start = 0
-    
-    # build url
-    url = build_url(q, start, date_posted, employment_type)
-
-    # print log
-    print("CRAWLING URL: " + url)
-
+def crawling(url):
     # check status
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=header)
     if response.status_code != requests.codes.ok:
-        return "Error!!!"
+        return "Status Error!!!"
 
     # map beautifulSoup
     html = response.text
@@ -70,30 +58,52 @@ def crawling(q, start, date_posted, employment_type):
     # return job list
     return job_preview_list
 
-def build_url(q, start, date_posted, employment_type):
+def build_url(params):
+    
+    # valid parameters & set default parameters
+    valid_params(params)
 
     # Domain
     url = "https://www.google.com"
 
     # Required
-    url += ("/search?q=" + str(q))
-    url += ("&start=" + str(start))
+    url += ("/search?q=" + params["q"])
+    url += ("&start=" + params["start"])
     url += "&ibp=htl;jobs#htivrt=jobs"
 
     # Optional
     date_tail, type_tail = "",""
-    if date_posted in ["today", "3days", "week", "month"]:
-        url += ("&htichips=date_posted:" + date_posted)
-        date_tail = ("&htischips=date_posted;" + date_posted)
-    if employment_type in ["FULLTIME", "INTERN", "CONTRACTOR", "PARTTIME"]:
+    if params["date_posted"]:
+        url += ("&htichips=date_posted:" + params["date_posted"])
+        date_tail = ("&htischips=date_posted;" + params["date_posted"])
+
+    if params["employment_type"]:
         if date_tail:
             url += ","
             type_tail = ","
         else:
             url += "&htichips="
             type_tail = "&htischips="
-        url += ("employment_type:" + employment_type)
-        type_tail += "employment_type;" + employment_type
+        url += ("employment_type:" + params["employment_type"])
+        type_tail += "employment_type;" + params["employment_type"]
+        
     url += (date_tail + type_tail)
 
     return url
+
+def valid_params(p):
+    DEFAULT_Q = "개발"
+    DEFAULT_STARAT = "0"
+    DEFALUT_DATE_POSTED = ""
+    DEFALUT_EMPLOYMENT_TYPE = ""
+    expected_date_posted = ["today", "3days", "week", "month"]
+    employment_type = ["FULLTIME", "INTERN", "CONTRACTOR", "PARTTIME"]
+
+    if "q" not in p:
+        p["q"] = DEFAULT_Q
+    if "start" not in p or not p["start"].isdigit():
+        p["start"] = DEFAULT_STARAT
+    if "date_posted" not in p or p["date_posted"] not in expected_date_posted:
+        p["date_posted"] = DEFALUT_DATE_POSTED
+    if "employment_type" not in p or p["employment_type"] not in employment_type:
+        p["employment_type"] = DEFALUT_EMPLOYMENT_TYPE    
