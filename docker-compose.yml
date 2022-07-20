@@ -5,8 +5,6 @@ services:
         image: rilac1/job-crawler-module_flask
         container_name: flask
         restart: always
-        environment: 
-            - APP_NAME=FlaskTest
         expose:
             - 8080
 
