@@ -2,7 +2,7 @@ version: "3.7"
 
 services: 
     flask:
-        build: ./flask
+        image: rilac1/job-crawler-module_flask
         container_name: flask
         restart: always
         environment: 
@@ -11,8 +11,9 @@ services:
             - 8080
 
     nginx:
-        build: ./nginx
+        image: rilac1/job-crawler-module_nginx
         container_name: nginx
         restart: always
         ports:
             - "5000:5000"
+            
