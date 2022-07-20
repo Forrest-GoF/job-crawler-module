@@ -69,7 +69,15 @@ def build_url(params):
     # Required
     url += ("/search?q=" + params["q"])
     url += ("&start=" + params["start"])
-    url += "&ibp=htl;jobs#htivrt=jobs"
+    url += "&ibp=htl;jobs"
+
+    # Set Location
+    url += "&uule=w+CAIQICILU291dGggS29yZWE"
+    url += "&hl=ko"
+    url += "&gl=kr"
+
+    # Set URL
+    url += "#htivrt=jobs"
 
     # Optional
     date_tail, type_tail = "",""
