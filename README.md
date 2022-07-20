@@ -1,7 +1,7 @@
 # job-crawler-module
 
-```sh
-git clone https://github.com/Forrest-GoF/job-crawler-module.git
+- port: 5000
+
 ```
-pip install -r requirements.txt
+docker-compose up -d --build
 ```

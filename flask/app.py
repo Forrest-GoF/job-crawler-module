@@ -11,6 +11,7 @@ def home():
 @app.route('/search', methods=['GET'])
 def search():
     params = request.args.to_dict()
+    
     url = crawler.build_url(params)
     data = crawler.crawling(url)
     
@@ -20,5 +21,7 @@ def search():
         })
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,
+            host = "0.0.0.0",
+            port = 5000)
     
