@@ -4,7 +4,8 @@ from flask_cors import CORS
 from service import crawler
 
 app = Flask(__name__) 
-CORS(app)
+CORS(app, supports_credentials=True,
+ resources={r'*': {'origins': 'http://localhost:3000'}})
 
 @app.route('/')
 def home():
