@@ -1,21 +1,10 @@
 # job-crawler-module
 
 ### 1) Local Build (without nginx)
-```sh 
-git clone https://github.com/Forrest-GoF/job-crawler-module.git
-```
-
-```sh
-pip install -r requirements.txt
-```
-
-```sh
-cd flask; flask run
-```
-
-```sh
-curl 127.0.0.1:5000
-```
+1. `git clone https://github.com/Forrest-GoF/job-crawler-module.git`
+2. `pip install -r requirements.txt`
+3. `cd flask; flask run`
+4. `curl 127.0.0.1:5000`
 
 
 ### 2) Docker (with Nginx)
