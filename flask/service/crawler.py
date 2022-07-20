@@ -40,15 +40,15 @@ def crawling(url):
             job_preview["thumbnail"] = thumbnail[i].find('g-img').find('img').get("src")
 
         # extract type/salary/date
-        for type_salary_date_tag in type_salary_date_parent:
-            type_salary_dates = type_salary_date_tag.findAll("span", {"class":"LL4CDc"})
-            for type_salary_date in type_salary_dates:
+        for type_salary_date_tag in type_salary_date_parent[i]:
+            type_salary_date_list = type_salary_date_tag.findAll("span", {"class":"LL4CDc"})
+            for type_salary_date in type_salary_date_list:
                 if type_salary_date.find("span"):
-                    date_salary = type_salary_date.text
-                    if date_salary[0].isdigit():
-                        job_preview["postedAt"] = date_salary
-                    elif date_salary[0] == "₩":
-                        job_preview["salary"] = date_salary
+                    salary_date = type_salary_date.find("span").text
+                    if salary_date[0].isdigit():
+                        job_preview["postedAt"] = salary_date
+                    elif salary_date[0] == "₩":
+                        job_preview["salary"] = salary_date
                 else:
                     job_preview["type"] = type_salary_date.text
         
