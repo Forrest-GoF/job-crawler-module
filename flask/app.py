@@ -19,6 +19,7 @@ def search():
     
     return jsonify({
         "data" : data,
+        "length" : len(data),
         "crawling_url" : url
         })
 
