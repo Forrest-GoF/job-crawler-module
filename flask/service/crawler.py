@@ -1,4 +1,5 @@
 import requests
+import re
 from bs4 import BeautifulSoup
 
 from service.config import header
@@ -24,6 +25,9 @@ def crawling(url):
     description = soup.findAll("span", {"class":"HBvzbc"})
     type_salary_date_parent = soup.findAll("div", {"class":"KKh3md"})
     
+    # get pre-defined image id
+    script_images = re.findall("x3dtbn:(.[^']*)x2", html, re.IGNORECASE)
+
     # parse data
     job_preview_list = []
     for i in range(len(title)):
@@ -37,7 +41,7 @@ def crawling(url):
         job_preview["description"] = description[i].text
 
         if thumbnail[i].find('g-img'):
-            job_preview["thumbnail"] = thumbnail[i].find('g-img').find('img').get("src")
+            job_preview["thumbnail"] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:" + script_images.pop(0).strip("\\")
 
         # extract type/salary/date
         for type_salary_date_tag in type_salary_date_parent[i]:
@@ -107,7 +111,7 @@ def valid_params(p):
     expected_date_posted = ["today", "3days", "week", "month"]
     employment_type = ["FULLTIME", "INTERN", "CONTRACTOR", "PARTTIME"]
 
-    if "q" not in p:
+    if "q" not in p or not p["q"]:
         p["q"] = DEFAULT_Q
     if "start" not in p or not p["start"].isdigit():
         p["start"] = DEFAULT_STARAT
