@@ -26,7 +26,7 @@ def crawling(url):
 
     # 채용 상세
     description = driver.find_element(By.CLASS_NAME, "content.break").get_attribute("innerText")
-    result["description"] = description
+    result["introduction"] = description
 
     # 복지 혜택
     benefit = {}
@@ -42,13 +42,15 @@ def crawling(url):
     result["location"] = location
 
     # 요약
-    keys = ["채용 분야", "지역", "경력 여부", "고용 형태", "연봉", "마감일", "등록일"]
+    keys = ["채용 분야", "지역", "경력 여부", "고용 형태", "연봉", "마감일", "수정일"]
     elements = driver.find_element(By.CLASS_NAME, "ui.job-infoset-content.items")\
         .find_elements(By.CLASS_NAME, "content")
     for key, element in zip(keys, elements):
         value = element.get_attribute("innerText")
         if key=="경력 여부":
             result["career"] = value
+        elif key=="연봉":
+            result["salary"] = value
         elif key=="마감일":
             result["deadline"] = value
 

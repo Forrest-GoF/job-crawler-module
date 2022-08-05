@@ -14,25 +14,23 @@ def crawling(url):
     result = {}
     
     # 본문
-    keys = ["introduction", "제목", "qualification", "preferential", "procedure", "benefit", "etc", "location"]
+    keys = ["introduction", "main_task", "qualification", "preferential", "procedure", "benefit", "기타", "location"]
     elements = driver.find_elements(By.CLASS_NAME, "recruitment-detail__txt")
+    if len(elements)==7: keys.remove("기타")
+    print(elements[-2].get_attribute('innerText'), len(keys))
     for key, element in zip(keys, elements):
         value = element.get_attribute('innerText')
-        if key != "제목":
+        if key!="기타":
             result[key] = value
 
-    # 마감일
-    deadline = driver.find_element(By.CLASS_NAME, "recruitment-summary__end").get_attribute("innerText")
-    result["deadline"] = deadline
-
     # 상세
-    keys = ["마감일", "직무", "경력", "고용형태", "급여", "스킬"]
+    keys = ["expired_at", "직무", "career", "type", "salary", "stacks"]
     elements = driver.find_elements(By.CLASS_NAME, "recruitment-summary__dd")
     for key, element in zip(keys, elements):
         value = element.get_attribute('innerText')
-        if key=="경력":
-            result["career"] = value
-        elif key=="스킬":
+        if key!="직무":
+            result[key] = value
+        elif key=="stacks":
             result["stacks"] = value.split(',')
 
     driver.close()
