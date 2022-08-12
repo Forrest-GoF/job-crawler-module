@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from service import crawler
-from service import url_builder
-from service import validator
+from google import google_crawler
+from google import url_builder
+from google import validator
 
 from dynamic import wanted_crawler
 from dynamic import jumpit_crawler
@@ -27,12 +27,12 @@ def search():
         raise e
     
     url = url_builder.bulid(params)
-    data = crawler.crawling(url)
+    data = google_crawler.crawling(url)
     
     return jsonify({
         "data" : data,
         "length" : len(data),
-        "crawling_url" : url
+        "crawlingUrl" : url
         })
 
 @app.route('/wanted', methods=['GET'])
@@ -64,18 +64,18 @@ def test():
     params = {
         "q":"개발",
         "start":0,
-        "date_posted":"",
-        "employment_type":""
+        "datePosted":"",
+        "employmentType":""
         }
 
     # url = url_builder.bulid(params)
     url = "https://www.google.com/search?vet=10ahUKEwiJ55-s4JX5AhUusJUCHXK4CQEQ06ACCKMJ..i&ei=SXLfYqfSGdbL-Qb6-onICQ&gl=kr&hl=ko&uule=w%20CAIQICILU291dGggS29yZWE&yv=3&rciv=jb&nfpr=0&chips=date_posted:today&schips=date_posted;today&q=%EA%B0%9C%EB%B0%9C&start=20&asearch=jb_list&cs=1&async=_id:VoQFxe,_pms:hts,_fmt:pc"
-    data = crawler.crawling(url)
+    data = google_crawler.crawling(url)
     
     return jsonify({
         "data" : data,
         "length" : len(data),
-        "crawling_url" : url
+        "crawlingUrl" : url
         })
 
 if __name__ == "__main__":

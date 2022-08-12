@@ -21,7 +21,7 @@ def crawling(url):
     result["stacks"] = stacks
 
     # 상세내용
-    keys = ["introduction", "main_task", "qualification", "preferential", "benefit"]
+    keys = ["introduction", "mainTask", "qualification", "preferential", "benefit"]
     elements = driver.find_element(By.CLASS_NAME, "JobDescription_JobDescription__VWfcb")\
         .find_elements(By.TAG_NAME, "p")
     for key, element in zip(keys, elements):

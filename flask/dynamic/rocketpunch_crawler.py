@@ -22,7 +22,7 @@ def crawling(url):
 
     # 주요업무
     main_task = driver.find_element(By.CLASS_NAME, "duty.break").get_attribute("innerText")
-    result["main_task"] = main_task
+    result["mainTask"] = main_task
 
     # 채용 상세
     description = driver.find_element(By.CLASS_NAME, "content.break").get_attribute("innerText")
