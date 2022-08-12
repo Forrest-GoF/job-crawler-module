@@ -2,7 +2,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-from service.config import header
+from google.config import header
 
 def crawling(url):
     # check status
@@ -16,12 +16,12 @@ def crawling(url):
 
     # get contents list
     title = soup.findAll("h2", {"class":"KLsYvd"})
-    id = soup.findAll("div", {"class":"KGjGe"})
+    key = soup.findAll("div", {"class":"KGjGe"})
     company_name = soup.findAll("div", {"class":"oNwCmf"})
     thumbnail = soup.findAll("div", {"class":"x1z8cb"})
     location = soup.findAll("div", {"class":"oNwCmf"})
     platform = soup.findAll("div","iSJ1kb va9cAf")
-    url = soup.findAll("a", {"class":"pMhGee"})
+    apply_url = soup.findAll("a", {"class":"pMhGee"})
     description = soup.findAll("span", {"class":"HBvzbc"})
     type_salary_date_parent = soup.findAll("div", {"class":"KKh3md"})
     
@@ -33,11 +33,11 @@ def crawling(url):
     for i in range(len(title)):
         job_preview = {}
         job_preview["title"] = title[i].text
-        job_preview["id"] = id[i].get("data-encoded-doc-id")
-        job_preview["company_name"] = company_name[i].find("div", {"class":"vNEEBe"}).text
+        job_preview["key"] = key[i].get("data-encoded-doc-id")
+        job_preview["companyName"] = company_name[i].find("div", {"class":"vNEEBe"}).text
         job_preview["location"] = location[i].find("div", {"class":"Qk80Jf"}).text
         job_preview["platform"] = platform[i].find('span').text
-        job_preview["applyUrl"] = url[i].get("href")
+        job_preview["applyUrl"] = apply_url[i].get("href")
         job_preview["description"] = description[i].text
 
         if thumbnail[i].find('g-img') and script_images:
