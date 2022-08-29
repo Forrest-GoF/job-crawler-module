@@ -42,6 +42,7 @@ def crawling(url):
 
         if thumbnail[i].find('g-img') and script_images:
             job_preview["thumbnail"] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:" + script_images.pop(0).strip("\\")
+            script_images.pop(0)
 
         # extract type/salary/date
         for type_salary_date_tag in type_salary_date_parent[i]:
