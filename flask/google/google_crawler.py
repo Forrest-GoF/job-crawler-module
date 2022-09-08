@@ -8,7 +8,7 @@ def crawling(url):
     # check status
     response = requests.get(url, headers=header)
     if response.status_code != requests.codes.ok:
-        return "Status Error!!!"
+        return []
 
     # map beautifulSoup
     html = response.text

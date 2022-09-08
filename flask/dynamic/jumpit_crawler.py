@@ -1,18 +1,11 @@
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-import time
+from dynamic.selenuim_manager import get_driver
+
 
 def crawling(url):
-    driver = webdriver.Chrome(ChromeDriverManager().install())
-    driver.get(url)
-
-    time.sleep(1)
-    driver.implicitly_wait(3)
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight-2000);")
-
+    driver = get_driver(url)
     result = {}
-    
+
     # 기술스택
     stacks = []
     elements = driver.find_elements(By.CLASS_NAME, "sc-eicpiI")
@@ -25,7 +18,7 @@ def crawling(url):
     elements = driver.find_elements(By.CLASS_NAME, "sc-cVAmsi")
     for key, element in zip(keys, elements):
         value = element.find_element(By.TAG_NAME, "pre").get_attribute("innerText")
-        if key!="기술스택":
+        if key != "기술스택":
             result[key] = value
 
     # 요약

@@ -1,18 +1,10 @@
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-import time
+from dynamic.selenuim_manager import get_driver
 
 def crawling(url):
-    driver = webdriver.Chrome(ChromeDriverManager().install())
-    driver.get(url)
-
-    time.sleep(1)
-    driver.implicitly_wait(3)
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight-2000);")
-
+    driver = get_driver(url)
     result = {}
-    
+
     # 기술스택
     stacks = []
     stack_element = driver.find_element(By.CLASS_NAME, "job-specialties")
