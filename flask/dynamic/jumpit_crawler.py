@@ -1,25 +1,24 @@
 from selenium.webdriver.common.by import By
 from dynamic.selenuim_manager import get_driver
 
+# https://www.jumpit.co.kr/position/4075?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
 
 def crawling(url):
     driver = get_driver(url)
     result = {}
 
-    # 기술스택
-    stacks = []
-    elements = driver.find_elements(By.CLASS_NAME, "sc-eicpiI")
-    for element in elements:
-        stacks.append(element.get_attribute('innerText'))
-    result["stacks"] = stacks
+    keys = ["stacks", "mainTask", "qualification", "preferential", "benefit", "procedure"]
+    elements = driver.find_elements(By.TAG_NAME, "pre")
 
-    # 상세내용
-    keys = ["기술스택", "mainTask", "qualification", "preferential", "benefit", "procedure"]
-    elements = driver.find_elements(By.CLASS_NAME, "sc-cVAmsi")
     for key, element in zip(keys, elements):
-        value = element.find_element(By.TAG_NAME, "pre").get_attribute("innerText")
-        if key != "기술스택":
-            result[key] = value
+        if key == "stacks":
+            value = []
+            for stack in element.find_elements(By.CLASS_NAME, "sc-dkqQuH"):
+                value.append(stack.get_attribute('innerText'))
+        else:
+            value = element.get_attribute("innerText")
+        
+        result[key] = value
 
     # 요약
     keys = ["career", "education", "deadline", "location"]
